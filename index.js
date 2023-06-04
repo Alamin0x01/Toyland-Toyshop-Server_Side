@@ -38,6 +38,7 @@ async function run() {
         .toArray();
       res.json(result);
     });
+
     // All data
     app.get("/toys", async (req, res) => {
       const cursor = toyCollection.find().limit(20);
@@ -52,9 +53,9 @@ async function run() {
           sellerEmail: req.query.email,
         };
       }
-      let sortQuery = { price: 1 }; // Default sorting query (ascending order)
+      let sortQuery = { price: 1 };
       if (req.query.sort === "desc") {
-        sortQuery = { price: -1 }; // If 'sort' query parameter is 'desc', change sorting query to descending order
+        sortQuery = { price: -1 };
       }
       const result = await toyCollection.find(query).sort(sortQuery).toArray();
       res.json(result);
@@ -66,6 +67,7 @@ async function run() {
       const result = await toyCollection.insertOne(newToy);
       res.json(result);
     });
+
     // update data
     app.put("/toys/:id", async (req, res) => {
       const id = req.params.id;
@@ -83,6 +85,16 @@ async function run() {
       res.json(result);
     });
 
+    // Data by id
+    app.get("/toy/:id", async (req, res) => {
+      const id = req.params.id;
+      //   const query = { _id: new ObjectId(id) };
+      const query = { _id: id };
+      const result = await toyCollection.findOne(query);
+      res.send(result);
+      //   console.log(id);
+    });
+
     // Data by category
     app.get("/toys/:category", async (req, res) => {
       const { category } = req.params;
@@ -93,15 +105,7 @@ async function run() {
       const result = await cursor.toArray();
       res.json(result);
     });
-    // Data by id
-    app.get("/toy/:id", async (req, res) => {
-      const id = req.params.id;
-      //   const query = { _id: new ObjectId(id) };
-      const query = { _id: id };
-      const result = await toyCollection.findOne(query);
-      res.send(result);
-      //   console.log(id);
-    });
+
     // Delete data
     app.delete("/toys/:id", async (req, res) => {
       const id = req.params.id;
