@@ -2,7 +2,7 @@
 
 ## Live Link
 
-Hosted in Firebase:(https://toy-marketplace-7b3ae.web.app/)
+Hosted in Vercel:(https://toy-marketplace-server-side-ochre.vercel.app/)
 
 ## Complete Project
 
